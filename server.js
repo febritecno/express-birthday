@@ -91,7 +91,7 @@ module.exports = () => {
         }
     });
 
-    // run the schedule
+    // Run the schedule
     schedules();
 
     // Start the server
