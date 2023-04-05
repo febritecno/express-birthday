@@ -21,7 +21,7 @@
 >
 > "email": "febritec312n2o@gmail.com",
 >
-> "birthday": "2003/02/232",
+> "birthday": "1995/03/02",
 >
 > "location": "America/Los_Angeles"
 >
