@@ -7,7 +7,7 @@ const {
 
 module.exports = () => {
     console.log("Schedules ready!");
-    const MAILER_SITE = 'https://email-service.digitalenvision.com.au/send-email';
+    const MAILER_URL = 'https://email-service.digitalenvision.com.au/send-email';
 
     // Send birthday messages
     async function sendBirthdayMessages() {
@@ -19,7 +19,7 @@ module.exports = () => {
                 if (now.date() === birthday.date() && now.month() === birthday.month()) {
                     const message = `Hey, ${user.firstName} ${user.lastName}, it's your birthday`;
                     try {
-                        await axios.post(MAILER_SITE, {
+                        await axios.post(MAILER_URL, {
                             email: user.email,
                             message
                         });
@@ -42,7 +42,7 @@ module.exports = () => {
             for (const unsentMessage of unsentMessages) {
                 const user = await User.findByPk(unsentMessage.userId);
                 try {
-                    await axios.post(MAILER_SITE, {
+                    await axios.post(MAILER_URL, {
                         message: unsentMessage.message,
                         email: user.email,
                     });
