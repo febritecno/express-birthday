@@ -11,6 +11,7 @@
 **Create User**
 
 >//  POST  http://localhost:3000/user
+>
 >// sample
 >
 > {
@@ -28,6 +29,7 @@
 > }
 
 **Fill field location with timezone code**
+
 https://gist.github.com/diogocapela/12c6617fc87607d11fd62d2a4f42b02a
 
 Node version : v18.12.1
