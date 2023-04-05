@@ -1,8 +1,7 @@
 const {
     Sequelize,
     Model,
-    DataTypes,
-    where
+    DataTypes
 } = require('sequelize');
 
 class User extends Model {}

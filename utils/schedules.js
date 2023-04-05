@@ -1,8 +1,12 @@
 const moment = require('moment-timezone');
 const axios = require('axios');
+const {
+    User,
+    UnsentMessage,
+} = require('./models.js');
 
 module.exports = () => {
-    console.log("======== schedules ready! =======");
+    console.log("Schedules ready!");
     const MAILER_SITE = 'https://email-service.digitalenvision.com.au/send-email';
 
     // Send birthday messages
@@ -38,7 +42,7 @@ module.exports = () => {
             for (const unsentMessage of unsentMessages) {
                 const user = await User.findByPk(unsentMessage.userId);
                 try {
-                    await axios.post('', {
+                    await axios.post(MAILER_SITE, {
                         message: unsentMessage.message,
                         email: user.email,
                     });

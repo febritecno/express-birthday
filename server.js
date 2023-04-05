@@ -1,15 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const {
-    Sequelize,
-    Model,
-    DataTypes,
-    where
-} = require('sequelize');
 const schedules = require('./utils/schedules.js');
 const {
     User,
-    UnsentMessage,
     database
 } = require('./utils/models.js');
 
