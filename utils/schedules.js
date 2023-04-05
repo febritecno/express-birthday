@@ -2,6 +2,9 @@ const moment = require('moment-timezone');
 const axios = require('axios');
 
 module.exports = () => {
+    console.log("======== schedules ready! =======");
+    const MAILER_SITE = 'https://email-service.digitalenvision.com.au/send-email';
+
     // Send birthday messages
     async function sendBirthdayMessages() {
         const users = await User.findAll();
@@ -12,7 +15,7 @@ module.exports = () => {
                 if (now.date() === birthday.date() && now.month() === birthday.month()) {
                     const message = `Hey, ${user.firstName} ${user.lastName}, it's your birthday`;
                     try {
-                        await axios.post('https://email-service.digitalenvision.com.au', {
+                        await axios.post(MAILER_SITE, {
                             email: user.email,
                             message
                         });
