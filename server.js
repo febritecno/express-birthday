@@ -27,15 +27,37 @@ module.exports = () => {
                 location
             } = req.body;
             try {
-                const date = new Date(birthday);
-                const user = await User.create({
-                    birthday: date,
-                    firstName,
-                    lastName,
-                    email,
-                    location,
+                const validDate = /^\d{4}-\d{2}-\d{2}$/;
+                const findEmail = await User.findAndCountAll({
+                    where: {
+                        email
+                    }
                 });
-                res.json(user);
+
+                if (findEmail.count > 0) {
+                    return res.json({
+                        "message": "email already used!"
+                    });
+                }
+
+                if (validDate.test(birthday)) {
+                    const user = await User.create({
+                        birthday,
+                        firstName,
+                        lastName,
+                        email,
+                        location,
+                    });
+                    return res.json({
+                        "message": "Created!",
+                        "data": user
+                    });
+                } else {
+                    return res.json({
+                        "message": "Format birthday invalid!"
+                    });
+                }
+
             } catch (error) {
                 return res.status(400).json({
                     error
@@ -49,12 +71,26 @@ module.exports = () => {
             const {
                 id
             } = req.params;
-            await User.destroy({
+            const user = await User.findAndCountAll({
                 where: {
                     id
                 }
             });
-            res.sendStatus(204);
+
+            if (user.count > 0) {
+                await User.destroy({
+                    where: {
+                        id
+                    }
+                });
+                return res.json({
+                    "message": `Delete userId ${id}`
+                });
+            }
+
+            return res.json({
+                "message": `User not found`
+            });
         } catch (error) {
             return res.status(400).json({
                 error
@@ -75,15 +111,24 @@ module.exports = () => {
                 birthday,
                 location
             } = req.body;
-            const date = new Date(birthday);
-            const user = await User.findByPk(id);
-            user.firstName = firstName;
-            user.lastName = lastName;
-            user.birthday = date;
-            user.location = location;
-            user.email = email;
-            await user.save();
-            res.json(user);
+            const validDate = /^\d{4}-\d{2}-\d{2}$/;
+            if (validDate.test(birthday)) {
+                const user = await User.findByPk(id);
+                user.firstName = firstName;
+                user.lastName = lastName;
+                user.birthday = birthday;
+                user.location = location;
+                user.email = email;
+                await user.save();
+                return res.json({
+                    "message": "Updated!",
+                    "data": user
+                });
+            } else {
+                return res.json({
+                    "message": "Format birthday invalid!"
+                });
+            }
         } catch (error) {
             return res.status(400).json({
                 error

@@ -35,7 +35,6 @@ function database() {
         email: {
             type: DataTypes.STRING,
             allowNull: false,
-            unique: true,
             validate: true
         },
         birthday: {
